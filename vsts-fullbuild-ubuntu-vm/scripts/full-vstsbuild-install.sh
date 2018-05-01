@@ -195,15 +195,15 @@ echo =============================== >> /home/$5/vsts.install.log.txt 2>&1
 echo Running Agent.Listener >> /home/$5/vsts.install.log.txt 2>&1
 sudo -u $5 -E bin/Agent.Listener configure --unattended --nostart --replace --acceptteeeula --url $1 --auth PAT --token $2 --pool $3 --agent $4 >> /home/$5/vsts.install.log.txt 2>&1
 echo =============================== >> /home/$5/vsts.install.log.txt 2>&1
-echo Running ./svc.sh install >> /home/$5/vsts.install.log.txt 2>&1
-sudo -E ./svc.sh install $5 >> /home/$5/vsts.install.log.txt 2>&1
+echo Running bin/svc.sh install >> /home/$5/vsts.install.log.txt 2>&1
+sudo -E bin/svc.sh install $5 >> /home/$5/vsts.install.log.txt 2>&1
 echo =============================== >> /home/$5/vsts.install.log.txt 2>&1
-echo Running ./svc.sh start >> /home/$5/vsts.install.log.txt 2>&1
+echo Running bin/svc.sh start >> /home/$5/vsts.install.log.txt 2>&1
 
 # HACK - only need next 3 lines if installing Ruby and Rails
-sudo sed -i "/^#!\/bin\/bash/a [[ -s \"\/home\/$5\/.rvm\/scripts\/rvm\" ]] \&\& source \"\/home\/$5\/.rvm\/scripts\/rvm\" \#L1P1" ./runsvc.sh
-sudo sed -i "/L1P1/a echo \`cat .path\`:\$MY_RUBY_HOME/bin:\$GEM_HOME/bin > .mypath \#L2P2" ./runsvc.sh
-sudo sed -i "/L2P2/a cp .mypath .path" ./runsvc.sh
+sudo sed -i "/^#!\/bin\/bash/a [[ -s \"\/home\/$5\/.rvm\/scripts\/rvm\" ]] \&\& source \"\/home\/$5\/.rvm\/scripts\/rvm\" \#L1P1" bin/runsvc.sh
+sudo sed -i "/L1P1/a echo \`cat .path\`:\$MY_RUBY_HOME/bin:\$GEM_HOME/bin > .mypath \#L2P2" bin/runsvc.sh
+sudo sed -i "/L2P2/a cp .mypath .path" bin/runsvc.sh
 
 sudo -E ./svc.sh start >> /home/$5/vsts.install.log.txt 2>&1
 echo =============================== >> /home/$5/vsts.install.log.txt 2>&1
